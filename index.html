@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Análise de Projeto de Software</title>
+    <style>
+        /* CSS Reset e Variáveis */
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --primary: #38bdf8;
+            --primary-hover: #0284c7;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --accent: #a855f7;
+            --border: #334155;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding-bottom: 3rem;
+        }
+
+        /* Cabecalho e Navegação */
+        header {
+            background-color: rgba(30, 41, 59, 0.8);
+            backdrop-filter: blur(8px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid var(--border);
+        }
+
+        nav {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+        }
+
+        .logo {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        /* Layout Main */
+        main {
+            max-width: 1100px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+        }
+
+        .hero {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.75rem;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+        
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Secao do Painel Interativo */
+        .interactive-section {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .step-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .step-btn {
+            background-color: var(--bg-color);
+            color: var(--text-muted);
+            border: 1px solid var(--border);
+            padding: 0.6rem 1.2rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            transition: all 0.2s;
+        }
+
+        .step-btn:hover {
+            color: var(--text-main);
+            border-color: var(--primary);
+        }
+
+        .step-btn.active {
+            background-color: var(--primary);
+            color: #000;
+            font-weight: bold;
+            border-color: var(--primary);
+        }
+
+        .display-card {
+            background-color: var(--bg-color);
+            border-left: 4px solid var(--primary);
+            padding: 1.5rem;
+            border-radius: 0 8px 8px 0;
+            min-height: 180px;
+        }
+
+        .display-card h3 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .display-card p {
+            color: var(--text-muted);
+        }
+
+        .display-card ul {
+            margin-top: 0.75rem;
+            padding-left: 1.2rem;
+            color: var(--text-main);
+        }
+
+        /* Tabela Comparativa */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+        }
+
+        .comparison-table th, 
+        .comparison-table td {
+            padding: 1rem;
+            text-align: left;
+        }
+
+        .comparison-table th {
+            background-color: rgba(56, 189, 248, 0.1);
+            color: var(--primary);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .comparison-table tr:not(:last-child) td {
+            border-bottom: 1px solid var(--border);
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .hero h1 { font-size: 2rem; }
+            .step-buttons { flex-direction: column; }
+            .step-btn { width: 100%; text-align: left; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav>
+            <div class="logo">SoftwareAnalysis.io</div>
+            <ul class="nav-links">
+                <li><a href="#fluxo">Fluxo de Análise</a></li>
+                <li><a href="#requisitos">Requisitos</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <h1>Análise de Projeto de Software</h1>
+            <p>Compreenda o processo de transformar problemas de negócio e especificações abstratas em arquiteturas sólidas e sistemas funcionais.</p>
+        </section>
+
+        <!-- Seção Interativa (JavaScript) -->
+        <section id="fluxo" class="interactive-section">
+            <h2>Etapas Fundamentais</h2>
+            <p style="color: var(--text-muted); margin-bottom: 1rem;">Clique nas etapas abaixo para explorar o papel de cada uma na análise:</p>
+
+            <div class="step-buttons">
+                <button class="step-btn active" onclick="selectStep(0)">1. Elicitação</button>
+                <button class="step-btn" onclick="selectStep(1)">2. Modelagem</button>
+                <button class="step-btn" onclick="selectStep(2)">3. Especificação</button>
+                <button class="step-btn" onclick="selectStep(3)">4. Validação</button>
+            </div>
+
+            <div class="display-card" id="displayCard">
+                <!-- Conteúdo renderizado dinamicamente via JS -->
+            </div>
+        </section>
+
+        <!-- Seção Informativa de Requisitos -->
+        <section id="requisitos">
+            <h2 style="margin-bottom: 1rem;">Tipos de Requisitos</h2>
+            <p style="color: var(--text-muted); margin-bottom: 1rem;">A análise classifica os Requisitos para definir as expectativas do sistema de forma estruturada:</p>
+
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Categoria</th>
+                        <th>O que define?</th>
+                        <th>Exemplo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Requisitos Funcionais (RF)</strong></td>
+                        <td>Comportamentos e funcionalidades diretas do sistema.</td>
+                        <td>"O sistema deve emitir um relatório PDF das vendas mensais."</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Requisitos Não-Funcionais (RNF)</strong></td>
+                        <td>Qualidades, restrições e critérios de desempenho.</td>
+                        <td>"O tempo de resposta do checkout não deve ultrapassar 2 segundos."</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Regras de Negócio (RN)</strong></td>
+                        <td>Políticas e diretrizes operacionais do cliente/empresa.</td>
+                        <td>"Descontos superiores a 15% exigem aprovação do gerente."</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <script>
+        // Dados das etapas de análise
+        const stepsData = [
+            {
+                title: "1. Elicitação de Requisitos",
+                description: "Levantamento inicial das necessidades dos stakeholders (clientes, usuários finais e gestores).",
+                details: [
+                    "Técnicas: Entrevistas, workshops, observação direta e prototipagem rápida.",
+                    "Foco: Identificar problemas reais e definir o escopo inicial do projeto."
+                ]
+            },
+            {
+                title: "2. Modelagem do Sistema",
+                description: "Criação de representações abstratas para visualizar o comportamento e a estrutura da aplicação.",
+                details: [
+                    "Uso de diagramas UML (Casos de Uso, Sequência, Classes).",
+                    "Mapeamento de fluxos de dados e arquitetura do banco de dados (DER)."
+                ]
+            },
+            {
+                title: "3. Especificação",
+                description: "Documentação detalhada de cada requisito em linguagem clara para a equipe de desenvolvimento.",
+                details: [
+                    "Escrita de Histórias de Usuário (User Stories) e Critérios de Aceite.",
+                    "Definição clara das regras de negócio e limites de integração."
+                ]
+            },
+            {
+                title: "4. Validação e Verificação",
+                description: "Garantia de que os requisitos capturados correspondem às expectativas do cliente e são viáveis tecnicamente.",
+                details: [
+                    "Revisões técnicas e reuniões de aprovação com o cliente (Sign-off).",
+                    "Garantia de consistência, sem ambiguidades ou contradições."
+                ]
+            }
+        ];
+
+        // Função para atualizar o painel de exibição
+        function selectStep(index) {
+            // Atualiza botões
+            const buttons = document.querySelectorAll('.step-btn');
+            buttons.forEach((btn, i) => {
+                if (i === index) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+
+            // Atualiza o conteúdo do cartão
+            const data = stepsData[index];
+            const card = document.getElementById('displayCard');
+
+            let itemsHtml = data.details.map(detail => `<li>${detail}</li>`).join('');
+
+            card.innerHTML = `
+                <h3>${data.title}</h3>
+                <p>${data.description}</p>
+                <ul>${itemsHtml}</ul>
+            `;
+        }
+
+        // Inicializa com o primeiro passo selecionado
+        selectStep(0);
+    </script>
+</body>
+</html>
