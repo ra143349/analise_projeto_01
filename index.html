@@ -1,335 +1,1134 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Análise de Projeto de Software</title>
-    <style>
-        /* CSS Reset e Variáveis */
-        :root {
-            --bg-color: #0f172a;
-            --card-bg: #1e293b;
-            --primary: #38bdf8;
-            --primary-hover: #0284c7;
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-            --accent: #a855f7;
-            --border: #334155;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Análise de Projeto de Software</title>
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Inter", Arial, sans-serif;
+    }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            line-height: 1.6;
-            padding-bottom: 3rem;
-        }
+    :root {
+      --primary: #6366f1;
+      --primary-dark: #4f46e5;
+      --bg: #f5f7fb;
+      --card: #ffffff;
+      --text: #1e293b;
+      --muted: #64748b;
+      --border: #e2e8f0;
+      --green: #10b981;
+      --yellow: #f59e0b;
+      --red: #ef4444;
+      --blue: #3b82f6;
+    }
 
-        /* Cabecalho e Navegação */
-        header {
-            background-color: rgba(30, 41, 59, 0.8);
-            backdrop-filter: blur(8px);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            border-bottom: 1px solid var(--border);
-        }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
 
-        nav {
-            max-width: 1100px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 2rem;
-        }
+    /* SIDEBAR */
+    .sidebar {
+      position: fixed;
+      width: 250px;
+      height: 100vh;
+      background: #111827;
+      color: white;
+      padding: 25px 18px;
+      z-index: 10;
+    }
 
-        .logo {
-            font-size: 1.25rem;
-            font-weight: bold;
-            color: var(--primary);
-        }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 40px;
+    }
 
-        .nav-links {
-            display: flex;
-            list-style: none;
-            gap: 1.5rem;
-        }
+    .logo-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 19px;
+    }
 
-        .nav-links a {
-            color: var(--text-muted);
-            text-decoration: none;
-            transition: color 0.2s;
-        }
+    .menu-title {
+      color: #94a3b8;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin: 25px 12px 10px;
+    }
 
-        .nav-links a:hover {
-            color: var(--primary);
-        }
+    .menu a {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: #cbd5e1;
+      text-decoration: none;
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 5px;
+      transition: .2s;
+      font-size: 14px;
+    }
 
-        /* Layout Main */
-        main {
-            max-width: 1100px;
-            margin: 2rem auto;
-            padding: 0 1.5rem;
-        }
+    .menu a:hover,
+    .menu a.active {
+      background: #252d3d;
+      color: white;
+    }
 
-        .hero {
-            text-align: center;
-            margin-bottom: 3rem;
-        }
+    .menu a.active {
+      border-left: 3px solid var(--primary);
+    }
 
-        .hero h1 {
-            font-size: 2.5rem;
-            margin-bottom: 0.75rem;
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-        
-            -webkit-text-fill-color: transparent;
-        }
+    /* MAIN */
+    .main {
+      margin-left: 250px;
+      padding: 25px 35px;
+    }
 
-        .hero p {
-            color: var(--text-muted);
-            font-size: 1.1rem;
-            max-width: 700px;
-            margin: 0 auto;
-        }
+    /* HEADER */
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 28px;
+    }
 
-        /* Secao do Painel Interativo */
-        .interactive-section {
-            background-color: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 2rem;
-            margin-bottom: 3rem;
-        }
+    .header h1 {
+      font-size: 28px;
+      margin-bottom: 5px;
+    }
 
-        .step-buttons {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.75rem;
-            margin-bottom: 1.5rem;
-        }
+    .header p {
+      color: var(--muted);
+      font-size: 14px;
+    }
 
-        .step-btn {
-            background-color: var(--bg-color);
-            color: var(--text-muted);
-            border: 1px solid var(--border);
-            padding: 0.6rem 1.2rem;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 0.95rem;
-            transition: all 0.2s;
-        }
+    .header-actions {
+      display: flex;
+      gap: 10px;
+    }
 
-        .step-btn:hover {
-            color: var(--text-main);
-            border-color: var(--primary);
-        }
+    button {
+      border: none;
+      cursor: pointer;
+    }
 
-        .step-btn.active {
-            background-color: var(--primary);
-            color: #000;
-            font-weight: bold;
-            border-color: var(--primary);
-        }
+    .btn {
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-weight: 600;
+      transition: .2s;
+    }
 
-        .display-card {
-            background-color: var(--bg-color);
-            border-left: 4px solid var(--primary);
-            padding: 1.5rem;
-            border-radius: 0 8px 8px 0;
-            min-height: 180px;
-        }
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+    }
 
-        .display-card h3 {
-            color: var(--primary);
-            margin-bottom: 0.5rem;
-        }
+    .btn-primary:hover {
+      background: var(--primary-dark);
+    }
 
-        .display-card p {
-            color: var(--text-muted);
-        }
+    .btn-light {
+      background: white;
+      border: 1px solid var(--border);
+      color: var(--text);
+    }
 
-        .display-card ul {
-            margin-top: 0.75rem;
-            padding-left: 1.2rem;
-            color: var(--text-main);
-        }
+    /* PROJECT CARD */
+    .project-card {
+      background: linear-gradient(120deg, #4f46e5, #7c3aed);
+      border-radius: 15px;
+      padding: 25px;
+      color: white;
+      margin-bottom: 25px;
+      position: relative;
+      overflow: hidden;
+    }
 
-        /* Tabela Comparativa */
-        .comparison-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 1rem;
-            background-color: var(--card-bg);
-            border-radius: 8px;
-            overflow: hidden;
-            border: 1px solid var(--border);
-        }
+    .project-card::after {
+      content: "";
+      position: absolute;
+      width: 250px;
+      height: 250px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.08);
+      right: -80px;
+      top: -120px;
+    }
 
-        .comparison-table th, 
-        .comparison-table td {
-            padding: 1rem;
-            text-align: left;
-        }
+    .project-card h2 {
+      font-size: 22px;
+      margin-bottom: 8px;
+    }
 
-        .comparison-table th {
-            background-color: rgba(56, 189, 248, 0.1);
-            color: var(--primary);
-            border-bottom: 1px solid var(--border);
-        }
+    .project-card p {
+      opacity: .85;
+      font-size: 14px;
+      max-width: 650px;
+    }
 
-        .comparison-table tr:not(:last-child) td {
-            border-bottom: 1px solid var(--border);
-        }
+    .project-info {
+      display: flex;
+      gap: 35px;
+      margin-top: 22px;
+      flex-wrap: wrap;
+    }
 
-        /* Responsividade */
-        @media (max-width: 768px) {
-            .nav-links { display: none; }
-            .hero h1 { font-size: 2rem; }
-            .step-buttons { flex-direction: column; }
-            .step-btn { width: 100%; text-align: left; }
-        }
-    </style>
+    .project-info div {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .project-info span:first-child {
+      font-size: 11px;
+      opacity: .7;
+      text-transform: uppercase;
+    }
+
+    .project-info span:last-child {
+      font-weight: 600;
+    }
+
+    /* KPI */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+      margin-bottom: 25px;
+    }
+
+    .kpi {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      position: relative;
+    }
+
+    .kpi-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .kpi-title {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .kpi-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 9px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 17px;
+    }
+
+    .purple {
+      background: #eef2ff;
+      color: var(--primary);
+    }
+
+    .green {
+      background: #ecfdf5;
+      color: var(--green);
+    }
+
+    .yellow {
+      background: #fffbeb;
+      color: var(--yellow);
+    }
+
+    .red {
+      background: #fef2f2;
+      color: var(--red);
+    }
+
+    .kpi-value {
+      font-size: 27px;
+      font-weight: 700;
+      margin-top: 15px;
+    }
+
+    .kpi-change {
+      font-size: 11px;
+      margin-top: 5px;
+      color: var(--green);
+    }
+
+    /* GRID */
+    .content-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 20px;
+      margin-bottom: 25px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+
+    .card-header h3 {
+      font-size: 16px;
+    }
+
+    .card-header span {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    /* CHART */
+    .chart-container {
+      height: 270px;
+      position: relative;
+    }
+
+    .chart {
+      width: 100%;
+      height: 220px;
+      display: flex;
+      align-items: flex-end;
+      gap: 15px;
+      padding: 10px 5px 0;
+      border-bottom: 1px solid var(--border);
+      border-left: 1px solid var(--border);
+    }
+
+    .bar-wrapper {
+      flex: 1;
+      height: 100%;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      position: relative;
+    }
+
+    .bar {
+      width: 55%;
+      max-width: 45px;
+      background: linear-gradient(to top, var(--primary), #8b5cf6);
+      border-radius: 5px 5px 0 0;
+      transition: .4s;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .bar:hover {
+      opacity: .8;
+      transform: scaleX(1.08);
+    }
+
+    .bar-value {
+      position: absolute;
+      top: -22px;
+      width: 100%;
+      text-align: center;
+      font-size: 10px;
+      color: var(--muted);
+    }
+
+    .bar-label {
+      position: absolute;
+      bottom: -25px;
+      font-size: 10px;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    /* RISK */
+    .risk-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 13px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .risk-item:last-child {
+      border-bottom: none;
+    }
+
+    .risk-left {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+    }
+
+    .risk-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+
+    .risk-name {
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .risk-description {
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 3px;
+    }
+
+    .badge {
+      padding: 5px 9px;
+      border-radius: 20px;
+      font-size: 10px;
+      font-weight: 700;
+    }
+
+    .badge-high {
+      background: #fee2e2;
+      color: #b91c1c;
+    }
+
+    .badge-medium {
+      background: #fef3c7;
+      color: #92400e;
+    }
+
+    .badge-low {
+      background: #dcfce7;
+      color: #166534;
+    }
+
+    /* TABLE */
+    .table-card {
+      margin-bottom: 25px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th {
+      text-align: left;
+      color: var(--muted);
+      font-size: 11px;
+      text-transform: uppercase;
+      padding: 12px;
+      background: #f8fafc;
+    }
+
+    td {
+      padding: 14px 12px;
+      border-bottom: 1px solid var(--border);
+      font-size: 13px;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 5px 9px;
+      border-radius: 20px;
+      font-size: 10px;
+      font-weight: 600;
+    }
+
+    .status::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+
+    .status.done {
+      color: #047857;
+      background: #d1fae5;
+    }
+
+    .status.progress {
+      color: #1d4ed8;
+      background: #dbeafe;
+    }
+
+    .status.pending {
+      color: #92400e;
+      background: #fef3c7;
+    }
+
+    .progress-container {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .progress {
+      height: 7px;
+      width: 90px;
+      background: #e5e7eb;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      height: 100%;
+      background: var(--primary);
+      border-radius: inherit;
+    }
+
+    /* ANALYSIS */
+    .analysis-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .analysis-card {
+      padding: 20px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: white;
+    }
+
+    .analysis-card h4 {
+      margin-bottom: 12px;
+      font-size: 14px;
+    }
+
+    .analysis-card p {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.7;
+    }
+
+    .score {
+      font-size: 30px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .score.good {
+      color: var(--green);
+    }
+
+    .score.warning {
+      color: var(--yellow);
+    }
+
+    .score.bad {
+      color: var(--red);
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 1100px) {
+      .kpi-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .content-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 800px) {
+      .sidebar {
+        width: 70px;
+        padding: 20px 10px;
+      }
+
+      .logo span,
+      .menu a span,
+      .menu-title {
+        display: none;
+      }
+
+      .logo {
+        justify-content: center;
+      }
+
+      .menu a {
+        justify-content: center;
+      }
+
+      .main {
+        margin-left: 70px;
+        padding: 20px;
+      }
+
+      .analysis-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .kpi-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+      }
+
+      .project-info {
+        gap: 20px;
+      }
+
+      table {
+        min-width: 650px;
+      }
+
+      .table-card {
+        overflow-x: auto;
+      }
+    }
+  </style>
 </head>
+
 <body>
 
-    <header>
-        <nav>
-            <div class="logo">SoftwareAnalysis.io</div>
-            <ul class="nav-links">
-                <li><a href="#fluxo">Fluxo de Análise</a></li>
-                <li><a href="#requisitos">Requisitos</a></li>
-            </ul>
-        </nav>
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+
+    <div class="logo">
+      <div class="logo-icon">◆</div>
+      <span>DevAnalytics</span>
+    </div>
+
+    <nav class="menu">
+
+      <div class="menu-title">Principal</div>
+
+      <a href="#" class="active">
+        <span>▦</span>
+        <span>Dashboard</span>
+      </a>
+
+      <a href="#">
+        <span>📊</span>
+        <span>Análises</span>
+      </a>
+
+      <a href="#">
+        <span>✓</span>
+        <span>Requisitos</span>
+      </a>
+
+      <div class="menu-title">Projeto</div>
+
+      <a href="#">
+        <span>⚠</span>
+        <span>Riscos</span>
+      </a>
+
+      <a href="#">
+        <span>◷</span>
+        <span>Cronograma</span>
+      </a>
+
+      <a href="#">
+        <span>⚙</span>
+        <span>Configurações</span>
+      </a>
+
+    </nav>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+
+    <!-- HEADER -->
+    <header class="header">
+      <div>
+        <h1>Análise do Projeto</h1>
+        <p>Visão geral dos indicadores e desempenho do projeto de software.</p>
+      </div>
+
+      <div class="header-actions">
+        <button class="btn btn-light" onclick="exportarRelatorio()">
+          ↓ Exportar
+        </button>
+
+        <button class="btn btn-primary" onclick="atualizarDados()">
+          ↻ Atualizar
+        </button>
+      </div>
     </header>
 
-    <main>
-        <section class="hero">
-            <h1>Análise de Projeto de Software</h1>
-            <p>Compreenda o processo de transformar problemas de negócio e especificações abstratas em arquiteturas sólidas e sistemas funcionais.</p>
-        </section>
+    <!-- PROJECT -->
+    <section class="project-card">
 
-        <!-- Seção Interativa (JavaScript) -->
-        <section id="fluxo" class="interactive-section">
-            <h2>Etapas Fundamentais</h2>
-            <p style="color: var(--text-muted); margin-bottom: 1rem;">Clique nas etapas abaixo para explorar o papel de cada uma na análise:</p>
+      <h2>Sistema de Gestão Empresarial</h2>
 
-            <div class="step-buttons">
-                <button class="step-btn active" onclick="selectStep(0)">1. Elicitação</button>
-                <button class="step-btn" onclick="selectStep(1)">2. Modelagem</button>
-                <button class="step-btn" onclick="selectStep(2)">3. Especificação</button>
-                <button class="step-btn" onclick="selectStep(3)">4. Validação</button>
+      <p>
+        Plataforma web para gerenciamento de clientes, vendas,
+        estoque, relatórios e processos administrativos.
+      </p>
+
+      <div class="project-info">
+
+        <div>
+          <span>Gerente</span>
+          <span>Mariana Silva</span>
+        </div>
+
+        <div>
+          <span>Início</span>
+          <span>05 Jan 2026</span>
+        </div>
+
+        <div>
+          <span>Previsão</span>
+          <span>30 Set 2026</span>
+        </div>
+
+        <div>
+          <span>Metodologia</span>
+          <span>Scrum</span>
+        </div>
+
+        <div>
+          <span>Status</span>
+          <span>Em andamento</span>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- KPI -->
+    <section class="kpi-grid">
+
+      <div class="kpi">
+        <div class="kpi-top">
+          <span class="kpi-title">Progresso geral</span>
+          <div class="kpi-icon purple">◈</div>
+        </div>
+
+        <div class="kpi-value">72%</div>
+        <div class="kpi-change">↑ 8% este mês</div>
+      </div>
+
+      <div class="kpi">
+        <div class="kpi-top">
+          <span class="kpi-title">Requisitos concluídos</span>
+          <div class="kpi-icon green">✓</div>
+        </div>
+
+        <div class="kpi-value">48 / 62</div>
+        <div class="kpi-change">77% concluídos</div>
+      </div>
+
+      <div class="kpi">
+        <div class="kpi-top">
+          <span class="kpi-title">Riscos identificados</span>
+          <div class="kpi-icon yellow">⚠</div>
+        </div>
+
+        <div class="kpi-value">08</div>
+        <div class="kpi-change" style="color:#f59e0b">
+          3 de alta prioridade
+        </div>
+      </div>
+
+      <div class="kpi">
+        <div class="kpi-top">
+          <span class="kpi-title">Qualidade</span>
+          <div class="kpi-icon green">★</div>
+        </div>
+
+        <div class="kpi-value">8.7/10</div>
+        <div class="kpi-change">↑ 0.4 pontos</div>
+      </div>
+
+    </section>
+
+    <!-- CHART + RISKS -->
+    <section class="content-grid">
+
+      <div class="card">
+
+        <div class="card-header">
+          <h3>Evolução do projeto</h3>
+          <span>Progresso mensal</span>
+        </div>
+
+        <div class="chart-container">
+          <div class="chart" id="chart"></div>
+        </div>
+
+      </div>
+
+      <div class="card">
+
+        <div class="card-header">
+          <h3>Principais riscos</h3>
+          <span>8 riscos</span>
+        </div>
+
+        <div class="risk-item">
+          <div class="risk-left">
+            <div class="risk-dot" style="background:#ef4444"></div>
+            <div>
+              <div class="risk-name">Integração com API</div>
+              <div class="risk-description">Dependência externa</div>
             </div>
+          </div>
+          <span class="badge badge-high">Alto</span>
+        </div>
 
-            <div class="display-card" id="displayCard">
-                <!-- Conteúdo renderizado dinamicamente via JS -->
+        <div class="risk-item">
+          <div class="risk-left">
+            <div class="risk-dot" style="background:#ef4444"></div>
+            <div>
+              <div class="risk-name">Prazo do projeto</div>
+              <div class="risk-description">Cronograma apertado</div>
             </div>
-        </section>
+          </div>
+          <span class="badge badge-high">Alto</span>
+        </div>
 
-        <!-- Seção Informativa de Requisitos -->
-        <section id="requisitos">
-            <h2 style="margin-bottom: 1rem;">Tipos de Requisitos</h2>
-            <p style="color: var(--text-muted); margin-bottom: 1rem;">A análise classifica os Requisitos para definir as expectativas do sistema de forma estruturada:</p>
+        <div class="risk-item">
+          <div class="risk-left">
+            <div class="risk-dot" style="background:#f59e0b"></div>
+            <div>
+              <div class="risk-name">Escalabilidade</div>
+              <div class="risk-description">Crescimento de usuários</div>
+            </div>
+          </div>
+          <span class="badge badge-medium">Médio</span>
+        </div>
 
-            <table class="comparison-table">
-                <thead>
-                    <tr>
-                        <th>Categoria</th>
-                        <th>O que define?</th>
-                        <th>Exemplo</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><strong>Requisitos Funcionais (RF)</strong></td>
-                        <td>Comportamentos e funcionalidades diretas do sistema.</td>
-                        <td>"O sistema deve emitir um relatório PDF das vendas mensais."</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Requisitos Não-Funcionais (RNF)</strong></td>
-                        <td>Qualidades, restrições e critérios de desempenho.</td>
-                        <td>"O tempo de resposta do checkout não deve ultrapassar 2 segundos."</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Regras de Negócio (RN)</strong></td>
-                        <td>Políticas e diretrizes operacionais do cliente/empresa.</td>
-                        <td>"Descontos superiores a 15% exigem aprovação do gerente."</td>
-                    </tr>
-                </tbody>
-            </table>
-        </section>
-    </main>
+        <div class="risk-item">
+          <div class="risk-left">
+            <div class="risk-dot" style="background:#10b981"></div>
+            <div>
+              <div class="risk-name">Segurança</div>
+              <div class="risk-description">Baixo impacto atual</div>
+            </div>
+          </div>
+          <span class="badge badge-low">Baixo</span>
+        </div>
 
-    <script>
-        // Dados das etapas de análise
-        const stepsData = [
-            {
-                title: "1. Elicitação de Requisitos",
-                description: "Levantamento inicial das necessidades dos stakeholders (clientes, usuários finais e gestores).",
-                details: [
-                    "Técnicas: Entrevistas, workshops, observação direta e prototipagem rápida.",
-                    "Foco: Identificar problemas reais e definir o escopo inicial do projeto."
-                ]
-            },
-            {
-                title: "2. Modelagem do Sistema",
-                description: "Criação de representações abstratas para visualizar o comportamento e a estrutura da aplicação.",
-                details: [
-                    "Uso de diagramas UML (Casos de Uso, Sequência, Classes).",
-                    "Mapeamento de fluxos de dados e arquitetura do banco de dados (DER)."
-                ]
-            },
-            {
-                title: "3. Especificação",
-                description: "Documentação detalhada de cada requisito em linguagem clara para a equipe de desenvolvimento.",
-                details: [
-                    "Escrita de Histórias de Usuário (User Stories) e Critérios de Aceite.",
-                    "Definição clara das regras de negócio e limites de integração."
-                ]
-            },
-            {
-                title: "4. Validação e Verificação",
-                description: "Garantia de que os requisitos capturados correspondem às expectativas do cliente e são viáveis tecnicamente.",
-                details: [
-                    "Revisões técnicas e reuniões de aprovação com o cliente (Sign-off).",
-                    "Garantia de consistência, sem ambiguidades ou contradições."
-                ]
-            }
-        ];
+      </div>
 
-        // Função para atualizar o painel de exibição
-        function selectStep(index) {
-            // Atualiza botões
-            const buttons = document.querySelectorAll('.step-btn');
-            buttons.forEach((btn, i) => {
-                if (i === index) {
-                    btn.classList.add('active');
-                } else {
-                    btn.classList.remove('active');
-                }
-            });
+    </section>
 
-            // Atualiza o conteúdo do cartão
-            const data = stepsData[index];
-            const card = document.getElementById('displayCard');
+    <!-- REQUIREMENTS -->
+    <section class="card table-card">
 
-            let itemsHtml = data.details.map(detail => `<li>${detail}</li>`).join('');
+      <div class="card-header">
+        <h3>Análise de requisitos</h3>
+        <span>Última atualização: hoje</span>
+      </div>
 
-            card.innerHTML = `
-                <h3>${data.title}</h3>
-                <p>${data.description}</p>
-                <ul>${itemsHtml}</ul>
-            `;
-        }
+      <table>
 
-        // Inicializa com o primeiro passo selecionado
-        selectStep(0);
-    </script>
+        <thead>
+          <tr>
+            <th>Requisito</th>
+            <th>Categoria</th>
+            <th>Prioridade</th>
+            <th>Status</th>
+            <th>Progresso</th>
+          </tr>
+        </thead>
+
+        <tbody>
+
+          <tr>
+            <td><strong>Autenticação de usuários</strong></td>
+            <td>Segurança</td>
+            <td>Alta</td>
+            <td>
+              <span class="status done">Concluído</span>
+            </td>
+            <td>
+              <div class="progress-container">
+                <div class="progress">
+                  <div class="progress-bar" style="width:100%"></div>
+                </div>
+                100%
+              </div>
+            </td>
+          </tr>
+
+          <tr>
+            <td><strong>Gestão de clientes</strong></td>
+            <td>Funcional</td>
+            <td>Alta</td>
+            <td>
+              <span class="status done">Concluído</span>
+            </td>
+            <td>
+              <div class="progress-container">
+                <div class="progress">
+                  <div class="progress-bar" style="width:100%"></div>
+                </div>
+                100%
+              </div>
+            </td>
+          </tr>
+
+          <tr>
+            <td><strong>Dashboard financeiro</strong></td>
+            <td>Relatórios</td>
+            <td>Alta</td>
+            <td>
+              <span class="status progress">Em andamento</span>
+            </td>
+            <td>
+              <div class="progress-container">
+                <div class="progress">
+                  <div class="progress-bar" style="width:75%"></div>
+                </div>
+                75%
+              </div>
+            </td>
+          </tr>
+
+          <tr>
+            <td><strong>Integração com pagamentos</strong></td>
+            <td>Integração</td>
+            <td>Alta</td>
+            <td>
+              <span class="status progress">Em andamento</span>
+            </td>
+            <td>
+              <div class="progress-container">
+                <div class="progress">
+                  <div class="progress-bar" style="width:60%"></div>
+                </div>
+                60%
+              </div>
+            </td>
+          </tr>
+
+          <tr>
+            <td><strong>Exportação de relatórios</strong></td>
+            <td>Funcional</td>
+            <td>Média</td>
+            <td>
+              <span class="status pending">Pendente</span>
+            </td>
+            <td>
+              <div class="progress-container">
+                <div class="progress">
+                  <div class="progress-bar" style="width:20%"></div>
+                </div>
+                20%
+              </div>
+            </td>
+          </tr>
+
+        </tbody>
+
+      </table>
+    </section>
+
+    <!-- ANALYSIS -->
+    <section class="analysis-grid">
+
+      <div class="analysis-card">
+
+        <h4>Viabilidade técnica</h4>
+
+        <div class="score good">92%</div>
+
+        <p>
+          A arquitetura proposta utiliza tecnologias consolidadas
+          e atende aos requisitos técnicos definidos para o projeto.
+        </p>
+
+      </div>
+
+      <div class="analysis-card">
+
+        <h4>Viabilidade econômica</h4>
+
+        <div class="score good">84%</div>
+
+        <p>
+          Os custos estimados permanecem dentro do orçamento,
+          embora exista necessidade de monitorar recursos de infraestrutura.
+        </p>
+
+      </div>
+
+      <div class="analysis-card">
+
+        <h4>Saúde do cronograma</h4>
+
+        <div class="score warning">76%</div>
+
+        <p>
+          O projeto apresenta um pequeno atraso em algumas entregas.
+          Recomenda-se priorizar os requisitos de maior impacto.
+        </p>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <script>
+
+    // ==========================
+    // GRÁFICO DE PROGRESSO
+    // ==========================
+
+    const dados = [
+      { mes: "Jan", valor: 8 },
+      { mes: "Fev", valor: 17 },
+      { mes: "Mar", valor: 29 },
+      { mes: "Abr", valor: 38 },
+      { mes: "Mai", valor: 48 },
+      { mes: "Jun", valor: 58 },
+      { mes: "Jul", valor: 66 },
+      { mes: "Ago", valor: 72 }
+    ];
+
+    const chart = document.getElementById("chart");
+
+    dados.forEach(item => {
+
+      const wrapper = document.createElement("div");
+      wrapper.className = "bar-wrapper";
+
+      const bar = document.createElement("div");
+      bar.className = "bar";
+      bar.style.height = item.valor + "%";
+
+      const value = document.createElement("div");
+      value.className = "bar-value";
+      value.textContent = item.valor + "%";
+
+      const label = document.createElement("div");
+      label.className = "bar-label";
+      label.textContent = item.mes;
+
+      bar.appendChild(value);
+      wrapper.appendChild(bar);
+      wrapper.appendChild(label);
+
+      chart.appendChild(wrapper);
+
+    });
+
+
+    // ==========================
+    // ATUALIZAR DADOS
+    // ==========================
+
+    function atualizarDados() {
+
+      const button = document.querySelector(".btn-primary");
+
+      button.textContent = "Atualizando...";
+
+      setTimeout(() => {
+
+        button.textContent = "✓ Atualizado";
+
+        setTimeout(() => {
+          button.textContent = "↻ Atualizar";
+        }, 1500);
+
+      }, 1000);
+    }
+
+
+    // ==========================
+    // EXPORTAR RELATÓRIO
+    // ==========================
+
+    function exportarRelatorio() {
+
+      const conteudo = `
+RELATÓRIO DE ANÁLISE DE PROJETO
+
+Projeto: Sistema de Gestão Empresarial
+
+Progresso geral: 72%
+Requisitos concluídos: 48 de 62
+Riscos identificados: 8
+Qualidade: 8.7/10
+
+Viabilidade técnica: 92%
+Viabilidade econômica: 84%
+Saúde do cronograma: 76%
+
+Relatório gerado em:
+${new Date().toLocaleString("pt-BR")}
+      `;
+
+      const blob = new Blob([conteudo], {
+        type: "text/plain;charset=utf-8"
+      });
+
+      const url = URL.createObjectURL(blob);
+
+      const link = document.createElement("a");
+
+      link.href = url;
+      link.download = "relatorio-projeto.txt";
+
+      link.click();
+
+      URL.revokeObjectURL(url);
+    }
+
+
+    // ==========================
+    // MENU
+    // ==========================
+
+    document.querySelectorAll(".menu a").forEach(link => {
+
+      link.addEventListener("click", function(event) {
+
+        event.preventDefault();
+
+        document.querySelectorAll(".menu a")
+          .forEach(item => item.classList.remove("active"));
+
+        this.classList.add("active");
+
+      });
+
+    });
+
+  </script>
+
 </body>
 </html>
